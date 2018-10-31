@@ -3,6 +3,8 @@
 %This function reduces the data and label matrix size so that the specified
 %ratio results in the shortened data and label matrix outputs, and keeps data
 %associated with each label by row.
+%
+%Output1 is label output, output2 is data output
 %Made by Kevin Walsh, MOCORE Lab, 10/30/2018
 
 function [output1, output2] = labelseg(labels, data, optionalVarZeroLabelValue);
