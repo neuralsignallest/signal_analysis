@@ -1,5 +1,4 @@
-% by MCR Laboratory, 20170319
-% modified by Norika, then modified by Kevin
+% 20170319
 
 close all; clear all; tic;
 dsr = 30;
