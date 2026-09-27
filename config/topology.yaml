@@ -1,0 +1,75 @@
+# EIO crew bench - pressurised-volume topology.
+#
+# Compartments are nodes. Hatches and ducts are edges. Keys carry their unit
+# in the name (volume_m3, capacity_m3_per_s, transit_time_s).
+#
+# All numbers below are PLACEHOLDERS scaled from ISS-class modules so the
+# graph is usable end to end; each carries its own source note. Replace them
+# once the reference vehicle is chosen (see docs/LOG.md).
+
+name: four_compartment_baseline
+
+compartments:
+  habitation:
+    volume_m3: 100.0
+    description: Crew quarters, galley, exercise.
+    source: placeholder; ISS Tranquility/Harmony-class module, TODO confirm
+  node:
+    volume_m3: 70.0
+    description: Central hub joining the other three compartments.
+    source: placeholder; ISS Unity-class node, TODO confirm
+  lab:
+    volume_m3: 105.0
+    description: Science and ECLSS equipment racks.
+    source: placeholder; ISS Destiny-class lab, TODO confirm
+  airlock:
+    volume_m3: 34.0
+    description: EVA airlock, isolable from the node.
+    source: placeholder; ISS Quest-class airlock, TODO confirm
+
+edges:
+  # Hatches: crew passage and bulk gas exchange when open.
+  - edge_id: hatch_hab_node
+    kind: hatch
+    a: habitation
+    b: node
+    capacity_m3_per_s: 0.5
+    transit_time_s: 10.0
+    source: placeholder; open-hatch mixing rate and crew crossing time, TODO
+  - edge_id: hatch_node_lab
+    kind: hatch
+    a: node
+    b: lab
+    capacity_m3_per_s: 0.5
+    transit_time_s: 10.0
+    source: placeholder; open-hatch mixing rate and crew crossing time, TODO
+  - edge_id: hatch_node_airlock
+    kind: hatch
+    a: node
+    b: airlock
+    capacity_m3_per_s: 0.5
+    transit_time_s: 15.0
+    source: placeholder; open-hatch mixing rate and crew crossing time, TODO
+
+  # Ducts: forced intermodule ventilation, independent of hatch position.
+  - edge_id: duct_hab_node
+    kind: duct
+    a: habitation
+    b: node
+    capacity_m3_per_s: 0.066
+    transit_time_s: 5.0
+    source: placeholder; capacity from params ventilation.imv_duct_nominal_flow, transit TODO
+  - edge_id: duct_node_lab
+    kind: duct
+    a: node
+    b: lab
+    capacity_m3_per_s: 0.066
+    transit_time_s: 5.0
+    source: placeholder; capacity from params ventilation.imv_duct_nominal_flow, transit TODO
+  - edge_id: duct_node_airlock
+    kind: duct
+    a: node
+    b: airlock
+    capacity_m3_per_s: 0.033
+    transit_time_s: 5.0
+    source: placeholder; half IMV flow to the airlock, TODO

@@ -1,0 +1,294 @@
+# EIO crew bench - engineering parameters.
+#
+# Every leaf is a mapping with exactly four keys:
+#   value       number, or the string TODO when not yet established
+#   unit        SI unless stated; "1" for dimensionless
+#   source      where the number comes from (document, standard, or "design choice")
+#   confidence  high | medium | low | unknown
+#
+# Bare numbers are not allowed anywhere in this file; the loader rejects them.
+# "design choice" sources are decisions made in this repo, not measured facts.
+
+constants:
+  gas_constant:
+    value: 8.314462618
+    unit: J/(mol*K)
+    source: CODATA 2018 recommended value
+    confidence: high
+  molar_mass_o2:
+    value: 31.998
+    unit: g/mol
+    source: IUPAC standard atomic weights (2 x 15.999)
+    confidence: high
+  molar_mass_co2:
+    value: 44.009
+    unit: g/mol
+    source: IUPAC standard atomic weights (12.011 + 2 x 15.999)
+    confidence: high
+  molar_mass_n2:
+    value: 28.014
+    unit: g/mol
+    source: IUPAC standard atomic weights (2 x 14.007)
+    confidence: high
+
+atmosphere:
+  nominal_total_pressure:
+    value: 101.3
+    unit: kPa
+    source: ISS sea-level-equivalent cabin pressure (14.7 psia)
+    confidence: high
+  nominal_o2_mole_fraction:
+    value: 0.21
+    unit: "1"
+    source: sea-level air composition, ISS nominal cabin mix
+    confidence: high
+  nominal_cabin_temperature:
+    value: 295.15
+    unit: K
+    source: design choice; 22 degC, inside the ISS habitable range of 18-27 degC
+    confidence: medium
+  ppo2_low_limit:
+    value: TODO
+    unit: kPa
+    source: NASA-STD-3001 Vol. 2 (TODO confirm limit for the revision adopted)
+    confidence: unknown
+  ppo2_high_limit:
+    value: TODO
+    unit: kPa
+    source: NASA-STD-3001 Vol. 2 / flammability limit (TODO confirm)
+    confidence: unknown
+  ppco2_24h_limit:
+    value: TODO
+    unit: kPa
+    source: NASA-STD-3001 Vol. 2 (TODO confirm revision-specific 24 h average limit)
+    confidence: unknown
+  total_pressure_low_limit:
+    value: TODO
+    unit: kPa
+    source: vehicle-specific (TODO)
+    confidence: unknown
+
+crew_metabolic:
+  o2_consumption_per_crew:
+    value: 0.82
+    unit: kg/day
+    source: NASA Baseline Values and Assumptions Document (BVAD), NASA/TP-2015-218570, nominal crew member
+    confidence: medium
+  co2_production_per_crew:
+    value: 1.04
+    unit: kg/day
+    source: NASA BVAD, NASA/TP-2015-218570, nominal crew member
+    confidence: medium
+  crew_count_nominal:
+    value: TODO
+    unit: "1"
+    source: mission definition (TODO)
+    confidence: unknown
+  sleep_metabolic_scale:
+    value: TODO
+    unit: "1"
+    source: ratio of sleeping to awake metabolic rate (TODO cite)
+    confidence: unknown
+
+ventilation:
+  imv_duct_nominal_flow:
+    value: 0.066
+    unit: m3/s
+    source: ISS intermodule ventilation fan nominal flow, approx. 140 cfm (TODO verify for this vehicle)
+    confidence: medium
+  fan_rated_power:
+    value: TODO
+    unit: W
+    source: fan datasheet (TODO)
+    confidence: unknown
+  fan_spinup_time:
+    value: TODO
+    unit: s
+    source: fan datasheet (TODO)
+    confidence: unknown
+  hatch_open_exchange_rate:
+    value: TODO
+    unit: m3/s
+    source: effective mixing rate through an open hatch with no forced flow (TODO)
+    confidence: unknown
+
+co2_removal:
+  bed_half_cycle_time:
+    value: TODO
+    unit: s
+    source: sorbent bed design (TODO)
+    confidence: unknown
+  bed_capacity:
+    value: TODO
+    unit: mol
+    source: sorbent bed design, CO2 at breakthrough (TODO)
+    confidence: unknown
+  bed_rated_removal_rate:
+    value: TODO
+    unit: mol/s
+    source: sorbent bed design (TODO)
+    confidence: unknown
+  bed_heater_power:
+    value: TODO
+    unit: W
+    source: sorbent bed design (TODO)
+    confidence: unknown
+
+o2_supply:
+  o2_generator_rated_rate:
+    value: TODO
+    unit: mol/s
+    source: oxygen generation assembly spec (TODO)
+    confidence: unknown
+  o2_generator_rated_power:
+    value: TODO
+    unit: W
+    source: oxygen generation assembly spec (TODO)
+    confidence: unknown
+  o2_tank_capacity:
+    value: TODO
+    unit: mol
+    source: stored-gas inventory (TODO)
+    confidence: unknown
+
+power:
+  bus_nominal_voltage:
+    value: TODO
+    unit: V
+    source: vehicle electrical spec (TODO)
+    confidence: unknown
+  bus_load_limit:
+    value: TODO
+    unit: W
+    source: vehicle electrical spec (TODO)
+    confidence: unknown
+  battery_capacity:
+    value: TODO
+    unit: W*h
+    source: vehicle electrical spec (TODO)
+    confidence: unknown
+  battery_soc_low_limit:
+    value: TODO
+    unit: "1"
+    source: battery operating limits (TODO)
+    confidence: unknown
+
+sensors:
+  sample_period:
+    value: 1.0
+    unit: s
+    source: design choice
+    confidence: high
+  history_window:
+    value: 3600.0
+    unit: s
+    source: design choice; length of channel history exposed in an Observation
+    confidence: high
+  o2_sensor_noise_sigma:
+    value: TODO
+    unit: kPa
+    source: sensor datasheet (TODO)
+    confidence: unknown
+  co2_sensor_noise_sigma:
+    value: TODO
+    unit: kPa
+    source: sensor datasheet (TODO)
+    confidence: unknown
+  pressure_sensor_noise_sigma:
+    value: TODO
+    unit: kPa
+    source: sensor datasheet (TODO)
+    confidence: unknown
+  sensor_dropout_probability:
+    value: TODO
+    unit: "1"
+    source: per-sample dropout rate for the dropout overlay (TODO)
+    confidence: unknown
+
+comm:
+  leo_one_way_latency:
+    value: TODO
+    unit: s
+    source: relay-satellite path (TODO)
+    confidence: unknown
+  lunar_one_way_latency:
+    value: 1.28
+    unit: s
+    source: light travel time at mean Earth-Moon distance, 384400 km / c
+    confidence: high
+  mars_one_way_latency_min:
+    value: 180.0
+    unit: s
+    source: light travel time at Earth-Mars closest approach, approx. 3 min
+    confidence: medium
+  mars_one_way_latency_max:
+    value: 1320.0
+    unit: s
+    source: light travel time at Earth-Mars conjunction, approx. 22 min
+    confidence: medium
+  blackout_duration_nominal:
+    value: TODO
+    unit: s
+    source: mission comm plan (TODO)
+    confidence: unknown
+
+alarms:
+  ppco2_caution:
+    value: TODO
+    unit: kPa
+    source: derived from atmosphere.ppco2_24h_limit (TODO)
+    confidence: unknown
+  ppco2_warning:
+    value: TODO
+    unit: kPa
+    source: derived from atmosphere.ppco2_24h_limit (TODO)
+    confidence: unknown
+  ppo2_low_warning:
+    value: TODO
+    unit: kPa
+    source: derived from atmosphere.ppo2_low_limit (TODO)
+    confidence: unknown
+  alarm_debounce:
+    value: TODO
+    unit: s
+    source: design choice (TODO)
+    confidence: unknown
+
+service:
+  crew_response_time_awake:
+    value: TODO
+    unit: s
+    source: crew timeline assumptions (TODO)
+    confidence: unknown
+  crew_response_time_asleep:
+    value: TODO
+    unit: s
+    source: crew timeline assumptions (TODO)
+    confidence: unknown
+  robot_transit_speed:
+    value: TODO
+    unit: m/s
+    source: free-flyer / IVA robot spec (TODO)
+    confidence: unknown
+  ground_response_time:
+    value: TODO
+    unit: s
+    source: mission control turnaround assumption, excludes link latency (TODO)
+    confidence: unknown
+
+sim:
+  timestep:
+    value: 1.0
+    unit: s
+    source: design choice
+    confidence: high
+  max_wait_duration:
+    value: 3600.0
+    unit: s
+    source: design choice; upper bound on a single Wait action
+    confidence: high
+  max_timer_duration:
+    value: 86400.0
+    unit: s
+    source: design choice; upper bound on a SetTimer action
+    confidence: high
